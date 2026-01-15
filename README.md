@@ -1,6 +1,6 @@
 # Railey Scraper
 
-This pair of Python scripts creates an html document with a report of all the cabin prices from Railey Real Estate for each weekend in June, July, and August. Cabins displayed all have an occupancy between 13 and 18, at least 4 beds, and at least 3 baths. 
+This pair of Python scripts creates an html document with a report of all the cabin prices from Railey Real Estate for each weekend in June, July, and August. Cabins displayed all have an occupancy between 13 and 18, at least 4 beds, and at least 3 baths. Additionally, gas grills, central A/C, Wi-Fi, and an outdoor fire pit are included as required amenities. Looking to add ways to make note of optional amenities like a pool
 
 ## Necessary Dependencies
 - Python (obviously) - 3.14 used for this project
