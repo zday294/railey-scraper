@@ -5,7 +5,7 @@ This pair of Python scripts creates an html document with a report of all the ca
 ## Necessary Dependencies
 - Python (obviously) - 3.14 used for this project
 - pyyaml
-- bs4
+- bs4 (aka BeautifulSoup)
 - requests
 
 ## How to run
