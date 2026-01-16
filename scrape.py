@@ -17,14 +17,18 @@ OCCUPANCY = ".rc-lodging-occ"
 
 CABIN_URL_NAMES = {
     "All In": "all",
-    "Into The Woods" : "woods",
-    "The O A Chalet": "o-chalet",
-    "Lake Escape": "lake-escape-0",
     "Almost Heaven": "almost-heaven-0",
+    "A-Frame of Mind": "frame-mind",
     "Bear Run Lodge": "bear-run-lodge-0",
     "Fireside Lodge": "fireside-lodge-0",
     "Get Your Creek On": "get-your-creek",
-    "On The Rocks": "rocks"
+    "Into The Woods" : "woods",
+    "Knotty -N- Nice": "knotty-n-nice",
+    "Lake Escape": "lake-escape-0",
+    "On The Rocks": "rocks",
+    "Pop-a-Top Inn": "pop-top-inn",
+    "The O A Chalet": "o-chalet",
+    "Tips Up": "tips",
 }
 
 cabins_needing_url_names = []
@@ -122,10 +126,12 @@ def name_to_url_name(name: str):
         url_name = name.replace("At ", "", 1).lower()
     elif "On " == name[:3]:
         url_name = name.replace("On ", "", 1).lower()
+    elif "Up The " == name[:7]:
+        url_name = name.replace("Up The ", "", 1).lower()
     else: 
         url_name = name.lower()
 
-    for phr in [" - ", " is on ", " of the ", " on the ", " at the ", " by the ", " of a ", " off the ", " to ", " the ", " of ", " on ", " in ", " at ", " from "]:
+    for phr in [" - ", " is on ", " of the ", " on the ", " at the ", " by the ", " of a ", " off the ", " in the ", " to ", " the ", " of ", " on ", " in ", " at ", " from ", " up ", " by "]:
         url_name = dash_replace(url_name, phr)
 
     if " & " in url_name:
@@ -133,7 +139,7 @@ def name_to_url_name(name: str):
     elif "&" in url_name:
         url_name = url_name.replace("&", "-")
 
-    url_name = url_name.replace("....", "").replace("'","").replace(",","").replace("!", "").replace(" ", "-")
+    url_name = url_name.replace("....", "").replace("'","").replace(",","").replace("!", "").replace("#", "").replace("(", "").replace(")","").replace(".","").replace(" ", "-")
 
     return url_name
 
@@ -232,9 +238,10 @@ def report(cabin_prices_by_weekend, average_prices):
         for amenity in [a for a in cabin.amenities if a not in REQUIRED_AMENITIES]:
             lines.append(f"    - {amenity}")
 
-    lines.append("\nRejected cabins:")
-    for cabin_name in cabins_needing_url_names:
-        lines.append(f"  - {cabin_name}")
+    if len(cabins_needing_url_names) > 0:
+        lines.append("\nRejected cabins:")
+        for cabin_name in cabins_needing_url_names:
+            lines.append(f"  - {cabin_name}")
 
     return "\n".join(lines)
 

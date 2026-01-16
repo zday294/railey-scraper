@@ -232,7 +232,7 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
 def main():
     # Configuration: specify which months to include (None = all months)
     # Options: "June", "July", "August"
-    months_to_include = {"June", "July", "August"}  # or None for all months
+    months_to_include = {"July", "August"}  # or None for all months
     
     # Load and process data
     data = parse_cabin_data('cabin-report.yml')
