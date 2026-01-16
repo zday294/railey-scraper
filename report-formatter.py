@@ -69,6 +69,36 @@ def get_all_amenities(cabin_amenities: Dict[str, Set[str]]) -> List[str]:
         all_amenities.update(amenities)
     return sorted(all_amenities)
 
+def extract_weekend_averages(data: Dict) -> Dict[str, float]:
+    """Extract weekend average prices from YAML data."""
+    weekend_averages = {}
+    
+    for key, value in data.items():
+        if key.startswith('Average price for '):
+            # Extract weekend name from "Average price for June Weekend 1"
+            weekend_name = key.replace('Average price for ', '')
+            if isinstance(value, str) and value.startswith('$'):
+                try:
+                    price = float(value.replace('$', '').replace(',', ''))
+                    weekend_averages[weekend_name] = price
+                except ValueError:
+                    continue
+    
+    return weekend_averages
+
+def get_orange_saturation(price: float, min_price: float, max_price: float) -> str:
+    """Calculate orange color saturation based on price relative to min/max range."""
+    if max_price == min_price:
+        return "rgba(255, 152, 0, 0.8)"  # Default orange if no range
+    
+    # Normalize price to 0-1 range
+    normalized = (price - min_price) / (max_price - min_price)
+    
+    # Map to saturation range (0.3 to 1.0 for visibility)
+    saturation = 0.3 + (normalized * 0.7)
+    
+    return f"rgba(255, 152, 0, {saturation:.2f})"
+
 def sort_weekends(weekends: List[str]) -> List[str]:
     """Sort weekends by month order, then by weekend number."""
     month_order = {
@@ -85,7 +115,7 @@ def sort_weekends(weekends: List[str]) -> List[str]:
     
     return sorted(weekends, key=weekend_sort_key)
 
-def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities: Dict[str, Set[str]], months_to_include: Set[str] = None) -> str:
+def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities: Dict[str, Set[str]], data: Dict, months_to_include: Set[str] = None) -> str:
     """Generate HTML table with highlighted best prices, hyperlinked cabin names, and amenity columns."""
     
     # Get all weekends (columns) and sort them
@@ -155,6 +185,15 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
             background-color: #f5f5f5;
             color: #ccc;
         }
+        .weekend-average {
+            background-color: #FF9800;
+            color: white;
+            font-weight: bold;
+        }
+        .average-row {
+            background-color: #FFF3E0;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -221,6 +260,36 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
         html += f"                <td><strong>${avg_price:,.2f}</strong></td>\n"
         html += "            </tr>\n"
     
+    # Get weekend averages from YAML data
+    weekend_averages_data = extract_weekend_averages(data)
+    
+    # Add weekend averages row if we have data
+    if weekend_averages_data:
+        html += "            <tr class='average-row'>\n"
+        html += "                <td class='cabin-name'>Weekend Average</td>\n"
+        
+        # Add empty cells for amenity columns
+        for amenity in all_amenities:
+            html += "                <td>—</td>\n"
+        
+        # Get price range for color saturation
+        available_prices = [weekend_averages_data.get(weekend, 0) for weekend in all_weekends if weekend in weekend_averages_data]
+        min_price = min(available_prices) if available_prices else 0
+        max_price = max(available_prices) if available_prices else 0
+        
+        # Add weekend average prices with dynamic coloring
+        for weekend in all_weekends:
+            if weekend in weekend_averages_data:
+                avg_price = weekend_averages_data[weekend]
+                color = get_orange_saturation(avg_price, min_price, max_price)
+                html += f"                <td style='background-color: {color}; color: white; font-weight: bold;'>${avg_price:,.2f}</td>\n"
+            else:
+                html += "                <td class='unavailable'>—</td>\n"
+        
+        # Leave final column blank as requested
+        html += "                <td>—</td>\n"
+        html += "            </tr>\n"
+    
     html += """        </tbody>
     </table>
 </body>
@@ -232,7 +301,7 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
 def main():
     # Configuration: specify which months to include (None = all months)
     # Options: "June", "July", "August"
-    months_to_include = {"July", "August"}  # or None for all months
+    months_to_include = {"June", "July", "August"}  # or None for all months
     
     # Load and process data
     data = parse_cabin_data('cabin-report.yml')
@@ -240,7 +309,7 @@ def main():
     cabin_amenities = extract_amenities(data)
     
     # Generate HTML
-    html_output = generate_html_table(cabin_data, cabin_amenities, months_to_include)
+    html_output = generate_html_table(cabin_data, cabin_amenities, data, months_to_include)
     
     # Save to file
     with open('cabin-report.html', 'w') as f:
