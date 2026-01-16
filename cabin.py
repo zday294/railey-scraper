@@ -121,13 +121,14 @@ class Cabin:
     
 
 class KeyCabin:
-    def __init__(self, name: str, occupancy: str, beds: int, baths: int, url: str, price=0.0):
+    def __init__(self, name: str, occupancy: int, beds: int, baths: int, url: str, amenities=[], price=0.0):
         self.name = name
         self.occupancy = occupancy
         self.beds = beds
         self.baths = baths
         self.price = price
         self.url = url
+        self.amenities = amenities
 
     def __repr__(self):
         return (
@@ -135,7 +136,10 @@ class KeyCabin:
             f"Beds: {self.beds}\n"
             f"Baths: {self.baths}\n"
             f"Occupancy: {self.occupancy}\n"
-            f"Price: ${self.price:.2f}"
+            f"Price: ${self.price:.2f}\n"
+            f"Amenities: {self.amenities}"
+
+
         )
     
     def get_price(self) -> Optional[float]:

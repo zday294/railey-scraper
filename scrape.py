@@ -15,6 +15,20 @@ BEDS = ".rc-lodging-beds"
 BATHS = ".rc-lodging-baths"
 OCCUPANCY = ".rc-lodging-occ"
 
+CABIN_URL_NAMES = {
+    "All In": "all",
+    "Into The Woods" : "woods",
+    "The O A Chalet": "o-chalet",
+    "Lake Escape": "lake-escape-0",
+    "Almost Heaven": "almost-heaven-0",
+    "Bear Run Lodge": "bear-run-lodge-0",
+    "Fireside Lodge": "fireside-lodge-0",
+    "Get Your Creek On": "get-your-creek",
+    "On The Rocks": "rocks"
+}
+
+cabins_needing_url_names = []
+
 MIN_OCCUPANCY = 13
 MAX_OCCUPANCY = 18
 MIN_BEDS = 4
@@ -22,7 +36,7 @@ MAX_BEDS = 16
 MIN_BATHS = 3
 MAX_BATHS = 14
 
-REQUIRED_AMENITIES = ["Grills", "A/C: Central Air", "WIFI", "Outdoor Fire Pit"]
+REQUIRED_AMENITIES = ["Grills (Gas)", "A/C: Central Air", "WIFI", "Outdoor Fire Pit"]
 OPTIONAL_AMENITIES = ["Swimming Pool (Community)", "Swimming Pool (Private)", "CARC", "Pool Table", "Home Theater"]
 
 cabin_key_details_dict = {}
@@ -90,11 +104,44 @@ def process_cabin_list(json_data) -> list[KeyCabin]:
 
     return key_cabins
 
+def dash_replace(name: str, phrase: str):
+    if phrase in name:
+        return name.replace(phrase, "-")
+    else:
+        return name
+
+
+def name_to_url_name(name: str):
+    url_name = ""
+
+    if "A " == name[:2]:
+        url_name = name.replace("A ", "", 1).lower()
+    elif "The " == name[:4]:
+        url_name = name.replace("The ", "", 1).lower()
+    elif "At " == name[:3]:
+        url_name = name.replace("At ", "", 1).lower()
+    elif "On " == name[:3]:
+        url_name = name.replace("On ", "", 1).lower()
+    else: 
+        url_name = name.lower()
+
+    for phr in [" - ", " is on ", " of the ", " on the ", " at the ", " by the ", " of a ", " off the ", " to ", " the ", " of ", " on ", " in ", " at ", " from "]:
+        url_name = dash_replace(url_name, phr)
+
+    if " & " in url_name:
+        url_name = url_name.replace(" & ", "-")
+    elif "&" in url_name:
+        url_name = url_name.replace("&", "-")
+
+    url_name = url_name.replace("....", "").replace("'","").replace(",","").replace("!", "").replace(" ", "-")
+
+    return url_name
+
 def get_key_cabin_details(name: str) -> KeyCabin:
-    print(f"Scraping details for cabin: {name}")
-    name_url = name.replace(" ", "-").replace("...", "").replace("'", "").replace("#","").lower()
+    name_url = CABIN_URL_NAMES[name] if name in CABIN_URL_NAMES.keys() else name_to_url_name(name)
     cabin_url = f"https://www.deepcreek.com/vacation-rentals/{name_url}"
-    result = requests.get(f"https://www.deepcreek.com/vacation-rentals/{name_url}")
+    print(f"Scraping details for cabin: {name} @ {cabin_url}")
+    result = requests.get(cabin_url)
     soup = BeautifulSoup(result.content, "html.parser")
 
     # add all amenities here
@@ -105,10 +152,12 @@ def get_key_cabin_details(name: str) -> KeyCabin:
         for desired_amenity in full_amenity_list:
             if found_amenity.find(string=re.compile(re.escape(desired_amenity))):
                 available_amenity_list.append(desired_amenity)
-                print(f"Found {desired_amenity} at {name}")
+                # print(f"Found {desired_amenity} at {name}")
 
     beds_text = soup.select_one(BEDS).text.strip() if soup.select_one(BEDS) else "N/A"
     beds = ''.join(filter(str.isdigit, beds_text)) if beds_text != "N/A" else "N/A"
+    if beds_text == "N/A":
+        cabins_needing_url_names.append(name)
     
     baths_text = soup.select_one(BATHS).text.strip() if soup.select_one(BATHS) else "N/A"
     baths = ''.join(filter(str.isdigit, baths_text)) if baths_text != "N/A" else "N/A"
@@ -129,9 +178,6 @@ def prices_for_cabins_on_weekend(weekend):
     print("Search complete, processing results...")
     cabins = process_cabin_list(result)
 
-    for cabin in cabins:
-        print(f"Cabin amenities: {cabin.amenities}")
-
     filtered_cabins = [
         cabin for cabin in cabins
         if MIN_OCCUPANCY <= cabin.occupancy <= MAX_OCCUPANCY
@@ -139,8 +185,6 @@ def prices_for_cabins_on_weekend(weekend):
         and MIN_BATHS <= cabin.baths <= MAX_BATHS
         and set(REQUIRED_AMENITIES) <= set(cabin.amenities)
     ]
-
-    print("Cabins actually filtered " if len(filtered_cabins) < len(cabins) else "Cabins not filtered...")
 
     # Apply filters based on occupancy, beds, and baths
     return filtered_cabins
@@ -159,9 +203,11 @@ def least_expensive_weekend(average_prices):
 
 def report(cabin_prices_by_weekend, average_prices):
     lines = []
+    all_cabins_dict = {}
     for weekend_name, cabins in cabin_prices_by_weekend.items():
         lines.append(f"\nCabin prices for {weekend_name}:")
         for cabin in cabins:
+            all_cabins_dict[cabin.name] = cabin
             lines.append(f"  \"{cabin.name}\":")
             lines.append(f"    Price: ${cabin.price:.2f}")
             lines.append(f"    URL: {cabin.url}")
@@ -171,13 +217,25 @@ def report(cabin_prices_by_weekend, average_prices):
         else:
             lines.append(f"No cabins available for {weekend_name}.")
     
-
     cheapest_weekend, cheapest_price = least_expensive_weekend(average_prices)
     if cheapest_price is not None:
         lines.append(f"\nLeast Expensive Weekend: {cheapest_weekend}\nAverage Price: ${cheapest_price:.2f}")
     else:
         lines.append("\nNo weekends have available cabins.")
-    
+
+    # for each cabin in the all-cabins dict
+    lines.append(f"\nCabin amenities:")
+    for cabin in all_cabins_dict.values():
+        #add lines for the optional amenities
+        lines.append(f"  {cabin.name}:")
+
+        for amenity in [a for a in cabin.amenities if a not in REQUIRED_AMENITIES]:
+            lines.append(f"    - {amenity}")
+
+    lines.append("\nRejected cabins:")
+    for cabin_name in cabins_needing_url_names:
+        lines.append(f"  - {cabin_name}")
+
     return "\n".join(lines)
 
 

@@ -44,6 +44,31 @@ def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, D
     
     return cabin_data
 
+def extract_amenities(data: Dict) -> Dict[str, Set[str]]:
+    """Extract cabin amenities from YAML data."""
+    cabin_amenities = {}
+    
+    if 'Cabin amenities' in data:
+        amenities_section = data['Cabin amenities']
+        if isinstance(amenities_section, dict):
+            for cabin, amenities_list in amenities_section.items():
+                if amenities_list is None:
+                    cabin_amenities[cabin] = set()
+                elif isinstance(amenities_list, list):
+                    # Remove duplicates by converting to set
+                    cabin_amenities[cabin] = set(amenities_list)
+                else:
+                    cabin_amenities[cabin] = set()
+    
+    return cabin_amenities
+
+def get_all_amenities(cabin_amenities: Dict[str, Set[str]]) -> List[str]:
+    """Get sorted list of all unique amenities."""
+    all_amenities = set()
+    for amenities in cabin_amenities.values():
+        all_amenities.update(amenities)
+    return sorted(all_amenities)
+
 def sort_weekends(weekends: List[str]) -> List[str]:
     """Sort weekends by month order, then by weekend number."""
     month_order = {
@@ -60,8 +85,8 @@ def sort_weekends(weekends: List[str]) -> List[str]:
     
     return sorted(weekends, key=weekend_sort_key)
 
-def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], months_to_include: Set[str] = None) -> str:
-    """Generate HTML table with highlighted best prices and hyperlinked cabin names."""
+def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities: Dict[str, Set[str]], months_to_include: Set[str] = None) -> str:
+    """Generate HTML table with highlighted best prices, hyperlinked cabin names, and amenity columns."""
     
     # Get all weekends (columns) and sort them
     all_weekends = set(
@@ -72,6 +97,9 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], months_to_includ
     
     # Get all cabins (rows)
     all_cabins = sorted(cabin_data.keys())
+    
+    # Get all amenities (columns)
+    all_amenities = get_all_amenities(cabin_amenities)
     
     html = """<!DOCTYPE html>
 <html>
@@ -115,6 +143,18 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], months_to_includ
             background-color: #ffebee;
             color: #999;
         }
+        .amenity-header {
+            background-color: #2196F3;
+            color: white;
+        }
+        .has-amenity {
+            background-color: #E3F2FD;
+            font-weight: bold;
+        }
+        .no-amenity {
+            background-color: #f5f5f5;
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -122,13 +162,20 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], months_to_includ
 """
     
     if months_to_include:
-        html += f"    <p>Showing data for: {', '.join(sorted(months_to_include))}</p>\n"
+        html += f"    <p>Showing data for: {', '.join(months_to_include)}</p>\n"
+    html += "    <p>Weekend = Friday night to Monday morning</p>"
+    html += "    <p>All cabins here incldue a gas grill, Wi-Fi, central air conditioning, and an outdoor firepit.</p>"
+    html += "    <p>CARC = Community Aquatic Recreation Center (aka pool)</p>"
     
     html += """    <table>
         <thead>
             <tr>
                 <th>Cabin</th>
 """
+    
+    # Add amenity column headers right after Cabin
+    for amenity in all_amenities:
+        html += f"                <th class='amenity-header'>{amenity}</th>\n"
     
     for weekend in all_weekends:
         html += f"                <th>{weekend}</th>\n"
@@ -148,6 +195,14 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], months_to_includ
             html += f"                <td class='cabin-name'><a href='{cabin_url}' target='_blank'>{cabin}</a></td>\n"
         else:
             html += f"                <td class='cabin-name'>{cabin}</td>\n"
+        
+        # Add amenity cells right after cabin name
+        cabin_amenity_set = cabin_amenities.get(cabin, set())
+        for amenity in all_amenities:
+            if amenity in cabin_amenity_set:
+                html += f"                <td class='has-amenity'>✓</td>\n"
+            else:
+                html += f"                <td class='no-amenity'>—</td>\n"
         
         # Find minimum price for this cabin
         prices = list(cabin_data[cabin]['prices'].values())
@@ -182,9 +237,10 @@ def main():
     # Load and process data
     data = parse_cabin_data('cabin-report.yml')
     cabin_data = extract_cabin_prices(data, months_to_include)
+    cabin_amenities = extract_amenities(data)
     
     # Generate HTML
-    html_output = generate_html_table(cabin_data, months_to_include)
+    html_output = generate_html_table(cabin_data, cabin_amenities, months_to_include)
     
     # Save to file
     with open('cabin-report.html', 'w') as f:
