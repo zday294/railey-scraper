@@ -41,7 +41,9 @@ MIN_BATHS = 3
 MAX_BATHS = 14
 
 REQUIRED_AMENITIES = ["Grills (Gas)", "A/C: Central Air", "WIFI", "Outdoor Fire Pit"]
-OPTIONAL_AMENITIES = ["Swimming Pool (Community)", "Swimming Pool (Private)", "CARC", "Pool Table", "Home Theater"]
+OPTIONAL_AMENITIES = ["Swimming Pool (Community)", "Swimming Pool (Private)", "CARC", "Pool Table", "Home Theater"] # should add "bunk beds to this one
+# for future reference, would be nice to have some "exclude these" features like "Duplex"
+# finding a way to search for all three floors would be hopeful
 
 cabin_key_details_dict = {}
 
