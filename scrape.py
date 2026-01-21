@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import threading
 import copy
 import re
+from amenities import Amenity
 
 SEARCH_URL = "https://www.deepcreek.com/rcapi/item/avail/search?rcav%5Bbegin%5D={0}%2F{1}%2F{2}&rcav%5Bend%5D={3}%2F{4}%2F{5}&rcav%5Badult%5D=1&rcav%5Bchild%5D=0&rcav%5Bflex%5D=&rcav%5Bflex_type%5D=d"
 
@@ -33,15 +34,25 @@ CABIN_URL_NAMES = {
 
 cabins_needing_url_names = []
 
-MIN_OCCUPANCY = 13
-MAX_OCCUPANCY = 18
+MIN_OCCUPANCY = 15
+MAX_OCCUPANCY = 20
 MIN_BEDS = 4
 MAX_BEDS = 16
 MIN_BATHS = 3
 MAX_BATHS = 14
 
-REQUIRED_AMENITIES = ["Grills (Gas)", "A/C: Central Air", "WIFI", "Outdoor Fire Pit"]
-OPTIONAL_AMENITIES = ["Swimming Pool (Community)", "Swimming Pool (Private)", "CARC", "Pool Table", "Home Theater"] # should add "bunk beds to this one
+REQUIRED_AMENITIES = [
+    Amenity("Grill", ["Grills (Gas)"]), 
+    Amenity("A/C",["A/C: Central Air"]), 
+    Amenity("Wifi", ["Internet: Wifi" , "Internet: Mesh WIFI System"]), 
+    Amenity("Fire Pit", ["Outdoor Fire Pit"])
+]
+OPTIONAL_AMENITIES = [
+    Amenity("Pool", ["Swimming Pool (Community)", "Swimming Pool (Private)", "CARC"]), 
+    Amenity("Pool Table", ["Pool Table"]), 
+    Amenity("Home Theater", ["Home Theater"])
+] 
+# should add "bunk beds to this one
 # for future reference, would be nice to have some "exclude these" features like "Duplex"
 # finding a way to search for all three floors would be hopeful
 
@@ -50,21 +61,21 @@ cabin_key_details_dict = {}
 #create tuples with the start and end dates for each weekend in June, july, and august 2026 adding on the friday before and monday after
 SUMMER_WEEKENDS_2026 = [
     # June 2026
-    ("June Weekend 1", "06", "05", "2026", "06", "08", "2026"),
-    ("June Weekend 2", "06", "12", "2026", "06", "15", "2026"),
-    ("June Weekend 3", "06", "19", "2026", "06", "22", "2026"),
-    ("June Weekend 4", "06", "26", "2026", "06", "29", "2026"),
-    # July 2026
-    ("July Weekend 1", "07", "03", "2026", "07", "06", "2026"),
-    ("July Weekend 2", "07", "10", "2026", "07", "13", "2026"),
+    # ("June Weekend 1", "06", "05", "2026", "06", "08", "2026"),
+    # ("June Weekend 2", "06", "12", "2026", "06", "15", "2026"),
+    # ("June Weekend 3", "06", "19", "2026", "06", "22", "2026"),
+    # ("June Weekend 4", "06", "26", "2026", "06", "29", "2026"),
+    # # July 2026
+    # ("July Weekend 1", "07", "03", "2026", "07", "06", "2026"),
+    # ("July Weekend 2", "07", "10", "2026", "07", "13", "2026"),
     ("July Weekend 3", "07", "17", "2026", "07", "20", "2026"),
     ("July Weekend 4", "07", "24", "2026", "07", "27", "2026"),
     # August 2026
-    ("August Weekend 1", "07", "31", "2026", "08", "03", "2026"),
-    ("August Weekend 2", "08", "07", "2026", "08", "10", "2026"),
-    ("August Weekend 3", "08", "14", "2026", "08", "17", "2026"),
-    ("August Weekend 4", "08", "21", "2026", "08", "24", "2026"),
-    ("August Weekend 5", "08", "28", "2026", "08", "31", "2026"),
+    # ("August Weekend 1", "07", "31", "2026", "08", "03", "2026"),
+    # ("August Weekend 2", "08", "07", "2026", "08", "10", "2026"),
+    # ("August Weekend 3", "08", "14", "2026", "08", "17", "2026"),
+    # ("August Weekend 4", "08", "21", "2026", "08", "24", "2026"),
+    # ("August Weekend 5", "08", "28", "2026", "08", "31", "2026"),
 ]
 
 
@@ -158,9 +169,10 @@ def get_key_cabin_details(name: str) -> KeyCabin:
 
     for found_amenity in soup.find_all(name="li", class_="amenity-list-item"):
         for desired_amenity in full_amenity_list:
-            if found_amenity.find(string=re.compile(re.escape(desired_amenity))):
-                available_amenity_list.append(desired_amenity)
-                # print(f"Found {desired_amenity} at {name}")
+            for amenity_key in desired_amenity.keys:
+                if found_amenity.find(string=re.compile(re.escape(amenity_key))):
+                    available_amenity_list.append(desired_amenity.name)
+                    break
 
     beds_text = soup.select_one(BEDS).text.strip() if soup.select_one(BEDS) else "N/A"
     beds = ''.join(filter(str.isdigit, beds_text)) if beds_text != "N/A" else "N/A"
@@ -187,12 +199,20 @@ def prices_for_cabins_on_weekend(weekend):
     cabins = process_cabin_list(result)
 
     filtered_cabins = [
-        cabin for cabin in cabins
-        if MIN_OCCUPANCY <= cabin.occupancy <= MAX_OCCUPANCY
-        and MIN_BEDS <= cabin.beds <= MAX_BEDS
-        and MIN_BATHS <= cabin.baths <= MAX_BATHS
-        and set(REQUIRED_AMENITIES) <= set(cabin.amenities)
+        # cabin for cabin in cabins
+        # if MIN_OCCUPANCY <= cabin.occupancy <= MAX_OCCUPANCY
+        # and MIN_BEDS <= cabin.beds <= MAX_BEDS
+        # and MIN_BATHS <= cabin.baths <= MAX_BATHS
+        # and set(REQUIRED_AMENITIES) <= set(cabin.amenities)
     ]
+
+    for cabin in cabins:
+        if MIN_OCCUPANCY <= cabin.occupancy <= MAX_OCCUPANCY and MIN_BEDS <= cabin.beds <= MAX_BEDS and MIN_BATHS <= cabin.baths <= MAX_BATHS:
+            req_amen_names =[amenity.name for amenity in REQUIRED_AMENITIES]
+            if set(req_amen_names) <= set(cabin.amenities):
+                filtered_cabins.append(cabin)
+            else:
+                print(f"Missing amenities for {cabin.name}: {set(req_amen_names) - set(cabin.amenities)}")
 
     # Apply filters based on occupancy, beds, and baths
     return filtered_cabins
@@ -237,7 +257,7 @@ def report(cabin_prices_by_weekend, average_prices):
         #add lines for the optional amenities
         lines.append(f"  {cabin.name}:")
 
-        for amenity in [a for a in cabin.amenities if a not in REQUIRED_AMENITIES]:
+        for amenity in [a for a in cabin.amenities if a not in [ra.name for ra in REQUIRED_AMENITIES]]:
             lines.append(f"    - {amenity}")
 
     if len(cabins_needing_url_names) > 0:
