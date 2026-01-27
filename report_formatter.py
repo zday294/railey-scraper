@@ -312,7 +312,7 @@ def main():
     html_output = generate_html_table(cabin_data, cabin_amenities, data, months_to_include)
     
     # Save to file
-    with open('cabin-report-brady.html', 'w') as f:
+    with open('cabin-report-no-brady.html', 'w') as f:
         f.write(html_output)
     
     print("HTML report generated: cabin-report.html")
