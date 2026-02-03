@@ -38,6 +38,9 @@ CABIN_URL_NAMES = {
 cabin_key_details_dict = {}
 cabins_needing_url_names = []
 
+def get_cabins_needing_url_names() -> list[str]:
+    return cabins_needing_url_names
+
 def dash_replace(name: str, phrase: str):
     if phrase in name:
         return name.replace(phrase, "-")

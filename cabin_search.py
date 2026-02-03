@@ -117,9 +117,9 @@ def report(cabin_prices_by_weekend: dict[str, list[KeyCabin]], average_prices):
         for amenity in [a for a in cabin.amenities if a not in [ra.name for ra in REQUIRED_AMENITIES]]:
             lines.append(f"    - {amenity}")
 
-    if len(cabins_needing_url_names) > 0:
+    if len(scrape.get_cabins_needing_url_names()) > 0:
         lines.append("\nRejected cabins:")
-        for cabin_name in cabins_needing_url_names:
+        for cabin_name in scrape.get_cabins_needing_url_names():
             lines.append(f"  - {cabin_name}")
 
     return "\n".join(lines)
