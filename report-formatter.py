@@ -2,6 +2,7 @@
 #report-formatter.py
 
 import yaml
+import argparse
 from typing import Dict, List, Set
 import statistics
 from datetime import datetime
@@ -13,7 +14,7 @@ def parse_cabin_data(filepath: str) -> Dict:
     return data
 
 def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, Dict[str, Dict]]:
-    """Extract cabin prices and URLs organized by cabin name and weekend."""
+    """Extract cabin prices, URLs, and bed information organized by cabin name and weekend."""
     cabin_data = {}
     
     for weekend_key, weekend_data in data.items():
@@ -33,10 +34,24 @@ def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, D
             if isinstance(cabin_info, dict) and 'Price' in cabin_info:
                 price_str = cabin_info['Price']
                 url = cabin_info.get('URL', '')
+                upper_beds = cabin_info.get('Upper Beds', 0)
+                main_beds = cabin_info.get('Main Beds', 0)
+                lower_beds = cabin_info.get('Lower Beds', 0)
+                garage_beds = cabin_info.get('Garage Beds', 0)
+                occupancy = cabin_info.get('Occupancy', 0)
+                
                 if isinstance(price_str, str) and price_str.startswith('$'):
                     price_value = float(price_str.replace('$', '').replace(',', ''))
                     if cabin not in cabin_data:
-                        cabin_data[cabin] = {'prices': {}, 'url': url}
+                        cabin_data[cabin] = {
+                            'prices': {}, 
+                            'url': url,
+                            'upper_beds': upper_beds,
+                            'main_beds': main_beds,
+                            'lower_beds': lower_beds,
+                            'garage_beds': garage_beds,
+                            'occupancy': occupancy
+                        }
                     cabin_data[cabin]['prices'][weekend_name] = price_value
                     # Use the URL from any weekend (they should be the same)
                     if not cabin_data[cabin]['url']:
@@ -185,6 +200,14 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
             background-color: #f5f5f5;
             color: #ccc;
         }
+        .bed-header {
+            background-color: #9C27B0;
+            color: white;
+        }
+        .bed-info {
+            background-color: #F3E5F5;
+            text-align: center;
+        }
         .weekend-average {
             background-color: #FF9800;
             color: white;
@@ -216,6 +239,14 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
     for amenity in all_amenities:
         html += f"                <th class='amenity-header'>{amenity}</th>\n"
     
+    # Add bed column headers
+    html += "                <th class='bed-header'>Upper Beds</th>\n"
+    html += "                <th class='bed-header'>Main Beds</th>\n"
+    html += "                <th class='bed-header'>Lower Beds</th>\n"
+    html += "                <th class='bed-header'>Garage Beds</th>\n"
+    html += "                <th class='bed-header'>Total Beds</th>\n"
+    html += "                <th class='bed-header'>Occupancy</th>\n"
+    
     for weekend in all_weekends:
         html += f"                <th>{weekend}</th>\n"
     
@@ -242,6 +273,21 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
                 html += f"                <td class='has-amenity'>✓</td>\n"
             else:
                 html += f"                <td class='no-amenity'>—</td>\n"
+        
+        # Add bed information cells
+        upper_beds = cabin_data[cabin].get('upper_beds', 0)
+        main_beds = cabin_data[cabin].get('main_beds', 0)
+        lower_beds = cabin_data[cabin].get('lower_beds', 0)
+        garage_beds = cabin_data[cabin].get('garage_beds', 0)
+        total_beds = upper_beds + main_beds + lower_beds + garage_beds
+        occupancy = cabin_data[cabin].get('occupancy', 0)
+        
+        html += f"                <td class='bed-info'>{upper_beds}</td>\n"
+        html += f"                <td class='bed-info'>{main_beds}</td>\n"
+        html += f"                <td class='bed-info'>{lower_beds}</td>\n"
+        html += f"                <td class='bed-info'>{garage_beds if garage_beds > 0 else '—'}</td>\n"
+        html += f"                <td class='bed-info'><strong>{total_beds}</strong></td>\n"
+        html += f"                <td class='bed-info'><strong>{occupancy}</strong></td>\n"
         
         # Find minimum price for this cabin
         prices = list(cabin_data[cabin]['prices'].values())
@@ -272,6 +318,14 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
         for amenity in all_amenities:
             html += "                <td>—</td>\n"
         
+        # Add empty cells for bed columns
+        html += "                <td>—</td>\n"  # Upper Beds
+        html += "                <td>—</td>\n"  # Main Beds
+        html += "                <td>—</td>\n"  # Lower Beds
+        html += "                <td>—</td>\n"  # Garage Beds
+        html += "                <td>—</td>\n"  # Total Beds
+        html += "                <td>—</td>\n"  # Occupancy
+        
         # Get price range for color saturation
         available_prices = [weekend_averages_data.get(weekend, 0) for weekend in all_weekends if weekend in weekend_averages_data]
         min_price = min(available_prices) if available_prices else 0
@@ -299,6 +353,13 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
     return html
 
 def main():
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Generate HTML cabin pricing report')
+    parser.add_argument('--output', '-o', 
+                       default='cabin-report.html',
+                       help='Output HTML filename (default: cabin-report.html)')
+    args = parser.parse_args()
+    
     # Configuration: specify which months to include (None = all months)
     # Options: "June", "July", "August"
     months_to_include = {"June", "July", "August"}  # or None for all months
@@ -312,10 +373,10 @@ def main():
     html_output = generate_html_table(cabin_data, cabin_amenities, data, months_to_include)
     
     # Save to file
-    with open('cabin-report-brady.html', 'w') as f:
+    with open(args.output, 'w') as f:
         f.write(html_output)
     
-    print("HTML report generated: cabin-report.html")
+    print(f"HTML report generated: {args.output}")
 
 if __name__ == "__main__":
     main()
