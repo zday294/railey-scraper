@@ -7,10 +7,15 @@ from typing import Dict, List, Set
 import statistics
 from datetime import datetime
 
-def parse_cabin_data(filepath: str) -> Dict:
+def parse_cabin_data_from_file(filepath: str) -> Dict:
     """Load and parse the YAML cabin report file."""
     with open(filepath, 'r') as f:
         data = yaml.safe_load(f)
+    return data
+
+def parse_cabin_data_from_string(yaml_string: str) -> Dict:
+    """Parse YAML cabin report from a string."""
+    data = yaml.safe_load(yaml_string)
     return data
 
 def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, Dict[str, Dict]]:
@@ -365,7 +370,7 @@ def main():
     months_to_include = {"June", "July", "August"}  # or None for all months
     
     # Load and process data
-    data = parse_cabin_data('cabin-report.yml')
+    data = parse_cabin_data_from_file('cabin-report.yml')
     cabin_data = extract_cabin_prices(data, months_to_include)
     cabin_amenities = extract_amenities(data)
     

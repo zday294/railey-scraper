@@ -1,4 +1,4 @@
-# cabin.py
+#cabin.py
 from dataclasses import dataclass, asdict
 from os import name
 from typing import Optional, List, Any, Dict
@@ -121,7 +121,7 @@ class Cabin:
     
 
 class KeyCabin:
-    def __init__(self, name: str, occupancy: int, beds: int, up_beds: int, main_beds: int, low_beds: int, gar_beds: int, baths: int, url: str, amenities=[], price=0.0):
+    def __init__(self, name: str, occupancy: int, beds: int, up_beds: int, main_beds: int, low_beds: int, gar_beds: int, baths: int, url: str, amenities=[], price=0.0, score=0):
         self.name = name
         self.occupancy = occupancy
         self.beds = beds
@@ -133,6 +133,7 @@ class KeyCabin:
         self.price = price
         self.url = url
         self.amenities = amenities
+        self.score = score
 
     def __repr__(self):
         return (
@@ -146,6 +147,7 @@ class KeyCabin:
             f"Occupancy: {self.occupancy}\n"
             f"Price: ${self.price:.2f}\n"
             f"Amenities: {self.amenities}\n"
+            f'Score: {self.score}\n'
             f"URL: {self.url}"
         )
     

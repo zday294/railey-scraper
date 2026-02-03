@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 #future-costs.py
 
-import scrape
+import cabin_search
 import statistics
 from cabin import KeyCabin
+import scrape
 
 # WEEKEND = ("July Weekend 3", "07", "17", "2026", "07", "20", "2026")
 

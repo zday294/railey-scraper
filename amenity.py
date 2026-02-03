@@ -1,4 +1,4 @@
-# amenities.py
+# amenity.py
 
 class Amenity:
     def __init__(self, name: str, keys: list[str]):
