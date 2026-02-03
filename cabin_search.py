@@ -95,6 +95,7 @@ def report(cabin_prices_by_weekend: dict[str, list[KeyCabin]], average_prices):
             lines.append(f"    Upper Beds: {cabin.up_beds}")
             lines.append(f"    Main Beds: {cabin.main_beds}")
             lines.append(f"    Lower Beds: {cabin.low_beds}")
+            lines.append(f"    Score: {cabin.get_score()}")
             if cabin.gar_beds > 0: lines.append(f"    Garage Beds: {cabin.gar_beds}")
         avg_price = average_prices[weekend_name]
         if avg_price is not None:

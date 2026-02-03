@@ -163,6 +163,6 @@ class KeyCabin:
         score += self.up_beds * 200
         score += self.main_beds * 100
         score += (self.low_beds + self.gar_beds)* 50
-        # need to find a way to include tub presence for better scoring
+        # TODO: find a way to include upper tub presence for better scoring
 
         return math.ceil(score)
