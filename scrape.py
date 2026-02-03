@@ -16,6 +16,11 @@ BEDS = ".rc-lodging-beds"
 BATHS = ".rc-lodging-baths"
 OCCUPANCY = ".rc-lodging-occ"
 
+UPPER_BEDS = "Upper Level: Bedroom"
+MAIN_BEDS = "Main Level: Bedroom"
+LOWER_BEDS = "Lower Level: Bedroom"
+ABOVE_GARAGE_BEDS = "Above Garage: Bedroom"
+
 CABIN_URL_NAMES = {
     "All In": "all",
     "Almost Heaven": "almost-heaven-0",
@@ -34,12 +39,14 @@ CABIN_URL_NAMES = {
 
 cabins_needing_url_names = []
 
-MIN_OCCUPANCY = 15
-MAX_OCCUPANCY = 20
+MIN_OCCUPANCY = 13
+MAX_OCCUPANCY = 14
 MIN_BEDS = 4
 MAX_BEDS = 16
 MIN_BATHS = 3
 MAX_BATHS = 14
+
+MIN_UP_BEDS = 2
 
 REQUIRED_AMENITIES = [
     Amenity("Grill", ["Grills (Gas)"]), 
@@ -173,6 +180,11 @@ def get_key_cabin_details(name: str) -> KeyCabin:
                 if found_amenity.find(string=re.compile(re.escape(amenity_key))):
                     available_amenity_list.append(desired_amenity.name)
                     break
+    up_beds = soup.find_all(string=re.compile(UPPER_BEDS))
+    low_beds = soup.find_all(string=re.compile(LOWER_BEDS))
+    main_beds = soup.find_all(string=re.compile(MAIN_BEDS))
+    ab_g_beds = soup.find_all(string=re.compile(ABOVE_GARAGE_BEDS))
+    
 
     beds_text = soup.select_one(BEDS).text.strip() if soup.select_one(BEDS) else "N/A"
     beds = ''.join(filter(str.isdigit, beds_text)) if beds_text != "N/A" else "N/A"
@@ -185,7 +197,16 @@ def get_key_cabin_details(name: str) -> KeyCabin:
     occupancy_text = soup.select_one(OCCUPANCY).text.strip() if soup.select_one(OCCUPANCY) else "N/A"
     occupancy = ''.join(filter(str.isdigit, occupancy_text)) if occupancy_text != "N/A" else "N/A"
     
-    return KeyCabin(name=name, occupancy=int(occupancy) if occupancy != "N/A" else 0, beds=int(beds) if beds != "N/A" else 0, baths=int(baths) if baths != "N/A" else 0, url=cabin_url,amenities=available_amenity_list)
+    return KeyCabin(
+        name=name, 
+        occupancy=int(occupancy) if occupancy != "N/A" else 0, 
+        beds=int(beds) if beds != "N/A" else 0, 
+        up_beds=len(up_beds),
+        main_beds=len(main_beds),
+        low_beds=len(low_beds),
+        gar_beds=len(ab_g_beds),
+        baths=int(baths) if baths != "N/A" else 0, 
+        url=cabin_url,amenities=available_amenity_list)
 
 
 
@@ -198,21 +219,20 @@ def prices_for_cabins_on_weekend(weekend):
     print("Search complete, processing results...")
     cabins = process_cabin_list(result)
 
-    filtered_cabins = [
-        # cabin for cabin in cabins
-        # if MIN_OCCUPANCY <= cabin.occupancy <= MAX_OCCUPANCY
-        # and MIN_BEDS <= cabin.beds <= MAX_BEDS
-        # and MIN_BATHS <= cabin.baths <= MAX_BATHS
-        # and set(REQUIRED_AMENITIES) <= set(cabin.amenities)
-    ]
+    filtered_cabins = []
 
     for cabin in cabins:
         if MIN_OCCUPANCY <= cabin.occupancy <= MAX_OCCUPANCY and MIN_BEDS <= cabin.beds <= MAX_BEDS and MIN_BATHS <= cabin.baths <= MAX_BATHS:
             req_amen_names =[amenity.name for amenity in REQUIRED_AMENITIES]
-            if set(req_amen_names) <= set(cabin.amenities):
-                filtered_cabins.append(cabin)
-            else:
+            if set(req_amen_names) > set(cabin.amenities):
                 print(f"Missing amenities for {cabin.name}: {set(req_amen_names) - set(cabin.amenities)}")
+                continue
+
+            if cabin.up_beds < MIN_UP_BEDS:
+                print(f"Not enough upper beds for {cabin.name}: {cabin.up_beds} < {MIN_UP_BEDS}")
+                continue
+            
+            filtered_cabins.append(cabin)
 
     # Apply filters based on occupancy, beds, and baths
     return filtered_cabins
@@ -229,7 +249,7 @@ def least_expensive_weekend(average_prices):
     return min(average_prices.items(), key=lambda x: x[1] if x[1] is not None else float('inf'))
 
 
-def report(cabin_prices_by_weekend, average_prices):
+def report(cabin_prices_by_weekend: dict[str, list[KeyCabin]], average_prices):
     lines = []
     all_cabins_dict = {}
     for weekend_name, cabins in cabin_prices_by_weekend.items():
@@ -239,6 +259,11 @@ def report(cabin_prices_by_weekend, average_prices):
             lines.append(f"  \"{cabin.name}\":")
             lines.append(f"    Price: ${cabin.price:.2f}")
             lines.append(f"    URL: {cabin.url}")
+            lines.append(f"    Occupancy: {cabin.occupancy}")
+            lines.append(f"    Upper Beds: {cabin.up_beds}")
+            lines.append(f"    Main Beds: {cabin.main_beds}")
+            lines.append(f"    Lower Beds: {cabin.low_beds}")
+            if cabin.gar_beds > 0: lines.append(f"    Garage Beds: {cabin.gar_beds}")
         avg_price = average_prices[weekend_name]
         if avg_price is not None:
             lines.append(f"Average price for {weekend_name}: ${avg_price:.2f}")

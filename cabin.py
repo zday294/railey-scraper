@@ -121,10 +121,14 @@ class Cabin:
     
 
 class KeyCabin:
-    def __init__(self, name: str, occupancy: int, beds: int, baths: int, url: str, amenities=[], price=0.0):
+    def __init__(self, name: str, occupancy: int, beds: int, up_beds: int, main_beds: int, low_beds: int, gar_beds: int, baths: int, url: str, amenities=[], price=0.0):
         self.name = name
         self.occupancy = occupancy
         self.beds = beds
+        self.up_beds = up_beds
+        self.main_beds = main_beds
+        self.low_beds = low_beds
+        self.gar_beds = gar_beds
         self.baths = baths
         self.price = price
         self.url = url
@@ -135,11 +139,14 @@ class KeyCabin:
             f"Cabin: {self.name}\n"
             f"Beds: {self.beds}\n"
             f"Baths: {self.baths}\n"
+            f"\tUpper Beds: {self.up_beds}\n"
+            f"\tMain Beds: {self.main_beds}\n"
+            f"\tLower Beds: {self.low_beds}\n"
+            f"\tGarage Beds: {self.gar_beds}\n"
             f"Occupancy: {self.occupancy}\n"
             f"Price: ${self.price:.2f}\n"
-            f"Amenities: {self.amenities}"
-
-
+            f"Amenities: {self.amenities}\n"
+            f"URL: {self.url}"
         )
     
     def get_price(self) -> Optional[float]:
