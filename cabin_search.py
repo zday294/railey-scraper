@@ -58,7 +58,7 @@ def prices_for_cabins_on_weekend(weekend):
     for cabin in cabins:
         if MIN_OCCUPANCY <= cabin.occupancy <= MAX_OCCUPANCY and MIN_BEDS <= cabin.beds <= MAX_BEDS and MIN_BATHS <= cabin.baths <= MAX_BATHS:
             req_amen_names =[amenity.name for amenity in REQUIRED_AMENITIES]
-            if set(req_amen_names) > set(cabin.amenities):
+            if not (set(req_amen_names) <= set(cabin.amenities)):
                 print(f"Missing amenities for {cabin.name}: {set(req_amen_names) - set(cabin.amenities)}")
                 continue
 

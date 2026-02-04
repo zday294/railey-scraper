@@ -1,7 +1,7 @@
 from amenity import Amenity
 
 MIN_OCCUPANCY = 13
-MAX_OCCUPANCY = 14
+MAX_OCCUPANCY = 18
 MIN_BEDS = 4
 MAX_BEDS = 16
 MIN_BATHS = 3
