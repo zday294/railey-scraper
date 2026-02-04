@@ -1,5 +1,6 @@
-# cabin.py
+#cabin.py
 from dataclasses import dataclass, asdict
+import math
 from os import name
 from typing import Optional, List, Any, Dict
 import json
@@ -146,8 +147,22 @@ class KeyCabin:
             f"Occupancy: {self.occupancy}\n"
             f"Price: ${self.price:.2f}\n"
             f"Amenities: {self.amenities}\n"
+            f'Score: {self.get_score()}\n'
             f"URL: {self.url}"
         )
     
     def get_price(self) -> Optional[float]:
         return self.price
+
+    #score calculations based on a theoretical money people would be willing to spend to have a feature
+    def get_score(self) -> int:
+        score = 5000 - self.price
+        score += 100 if "Theater" in self.amenities else 0
+        score += 150 if "Pool" in self.amenities else 0
+        score += 150 if "Pool Table" in self.amenities else 0
+        score += self.up_beds * 200
+        score += self.main_beds * 100
+        score += (self.low_beds + self.gar_beds)* 50
+        # TODO: find a way to include upper tub presence for better scoring
+
+        return math.ceil(score)

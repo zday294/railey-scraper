@@ -14,4 +14,11 @@ Once dependencies are installed simply run `python scrape.py` followed by `pytho
 
 ## Changing parameter values
 
-The parameters for things like which time frames are looked at ("weekends") as well as occupancy, bed, and bath ranges are all set as global variables in `scrape.py`. 
+`config.py` contains the following configurable parameters 
+- MIN_OCCUPANCY / MAX_OCCUPANCY - Cabins with an occupancy that is at least (>=) MIN_OCCUPANCY and at most (<=) MAX_OCCUPANCY will be included in the results
+- MIN_BEDS / MAX_BEDS - Cabins with at least a  MIN_BEDS and 
+
+
+## AI Disclosure
+
+This project has been created partly through the use of generative AI tools, specifically GitHub Copilot. `report-formatter.py` has been written and updated by assigning tasks to an AI agent.

@@ -7,10 +7,15 @@ from typing import Dict, List, Set
 import statistics
 from datetime import datetime
 
-def parse_cabin_data(filepath: str) -> Dict:
+def parse_cabin_data_from_file(filepath: str) -> Dict:
     """Load and parse the YAML cabin report file."""
     with open(filepath, 'r') as f:
         data = yaml.safe_load(f)
+    return data
+
+def parse_cabin_data_from_string(yaml_string: str) -> Dict:
+    """Parse YAML cabin report from a string."""
+    data = yaml.safe_load(yaml_string)
     return data
 
 def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, Dict[str, Dict]]:
@@ -39,12 +44,14 @@ def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, D
                 lower_beds = cabin_info.get('Lower Beds', 0)
                 garage_beds = cabin_info.get('Garage Beds', 0)
                 occupancy = cabin_info.get('Occupancy', 0)
+                score = cabin_info.get('Score', 0)
                 
                 if isinstance(price_str, str) and price_str.startswith('$'):
                     price_value = float(price_str.replace('$', '').replace(',', ''))
                     if cabin not in cabin_data:
                         cabin_data[cabin] = {
                             'prices': {}, 
+                            'scores': {},
                             'url': url,
                             'upper_beds': upper_beds,
                             'main_beds': main_beds,
@@ -53,6 +60,7 @@ def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, D
                             'occupancy': occupancy
                         }
                     cabin_data[cabin]['prices'][weekend_name] = price_value
+                    cabin_data[cabin]['scores'][weekend_name] = score
                     # Use the URL from any weekend (they should be the same)
                     if not cabin_data[cabin]['url']:
                         cabin_data[cabin]['url'] = url
@@ -251,6 +259,7 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
         html += f"                <th>{weekend}</th>\n"
     
     html += """                <th>Average Price</th>
+                <th>Score</th>
             </tr>
         </thead>
         <tbody>
@@ -294,6 +303,10 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
         min_price = min(prices) if prices else None
         avg_price = statistics.mean(prices) if prices else 0
         
+        # Calculate average score for this cabin
+        scores = list(cabin_data[cabin]['scores'].values())
+        avg_score = statistics.mean(scores) if scores else 0
+        
         for weekend in all_weekends:
             if weekend in cabin_data[cabin]['prices']:
                 price = cabin_data[cabin]['prices'][weekend]
@@ -304,6 +317,7 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
                 html += "                <td class='unavailable'>—</td>\n"
         
         html += f"                <td><strong>${avg_price:,.2f}</strong></td>\n"
+        html += f"                <td><strong>{avg_score:,.0f}</strong></td>\n"
         html += "            </tr>\n"
     
     # Get weekend averages from YAML data
@@ -340,8 +354,9 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
             else:
                 html += "                <td class='unavailable'>—</td>\n"
         
-        # Leave final column blank as requested
-        html += "                <td>—</td>\n"
+        # Leave final columns blank as requested
+        html += "                <td>—</td>\n"  # Average Price
+        html += "                <td>—</td>\n"  # Average Score
         html += "            </tr>\n"
     
     html += """        </tbody>
@@ -365,7 +380,7 @@ def main():
     months_to_include = {"June", "July", "August"}  # or None for all months
     
     # Load and process data
-    data = parse_cabin_data('cabin-report.yml')
+    data = parse_cabin_data_from_file('cabin-report.yml')
     cabin_data = extract_cabin_prices(data, months_to_include)
     cabin_amenities = extract_amenities(data)
     
