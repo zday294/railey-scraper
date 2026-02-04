@@ -13,6 +13,60 @@ def parse_cabin_data(yaml_string: str) -> Dict:
     data = yaml.safe_load(yaml_string)
     return data
 
+def build_data_from_python(cabin_prices_by_weekend: Dict, average_prices: Dict, required_amenities: List = None) -> Dict:
+    """Build the data structure directly from Python objects (KeyCabin instances).
+    
+    Args:
+        cabin_prices_by_weekend: Dict mapping weekend names to lists of KeyCabin objects
+        average_prices: Dict mapping weekend names to average prices
+        required_amenities: List of required amenity names to filter out from display
+        
+    Returns:
+        Dict in the same format as YAML-parsed data
+    """
+    if required_amenities is None:
+        required_amenities = []
+    
+    data = {}
+    all_cabins_dict = {}
+    
+    # Build cabin prices by weekend
+    for weekend_name, cabins in cabin_prices_by_weekend.items():
+        weekend_key = f"Cabin prices for {weekend_name}"
+        data[weekend_key] = {}
+        
+        for cabin in cabins:
+            all_cabins_dict[cabin.name] = cabin
+            cabin_info = {
+                'Price': f'${cabin.price:.2f}',
+                'URL': cabin.url,
+                'Occupancy': cabin.occupancy,
+                'Upper Beds': cabin.up_beds,
+                'Main Beds': cabin.main_beds,
+                'Lower Beds': cabin.low_beds,
+                'Score': cabin.get_score()
+            }
+            if cabin.gar_beds > 0:
+                cabin_info['Garage Beds'] = cabin.gar_beds
+            
+            data[weekend_key][cabin.name] = cabin_info
+        
+        # Add average price for this weekend
+        avg_price = average_prices.get(weekend_name)
+        if avg_price is not None:
+            data[f"Average price for {weekend_name}"] = f'${avg_price:.2f}'
+    
+    # Build amenities section (excluding required amenities)
+    data['Cabin amenities'] = {}
+    for cabin in all_cabins_dict.values():
+        optional_amenities = [a for a in cabin.amenities if a not in required_amenities]
+        if optional_amenities:
+            data['Cabin amenities'][cabin.name] = optional_amenities
+        else:
+            data['Cabin amenities'][cabin.name] = None
+    
+    return data
+
 def extract_cabin_prices(data: Dict, months_to_include: Set[str]) -> Dict[str, Dict[str, Dict]]:
     """Extract cabin prices, URLs, and bed information organized by cabin name and weekend."""
     cabin_data = {}
@@ -362,9 +416,22 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
     
     return html
 
-def format(yaml_data: str, months_to_include: Set[str] = None) -> str:
-    """Format the given YAML cabin data string into an HTML report."""
-    data = parse_cabin_data(yaml_data)
+def format(yaml_data, months_to_include: Set[str] = None) -> str:
+    """Format the given cabin data into an HTML report.
+    
+    Args:
+        yaml_data: Either a YAML string or a dict (already parsed)
+        months_to_include: Set of month names to include in the report
+        
+    Returns:
+        HTML string
+    """
+    if isinstance(yaml_data, str):
+        data = parse_cabin_data(yaml_data)
+    else:
+        # Assume it's already a dict
+        data = yaml_data
+    
     cabin_data = extract_cabin_prices(data, months_to_include)
     cabin_amenities = extract_amenities(data)
     html_output = generate_html_table(cabin_data, cabin_amenities, data, months_to_include)

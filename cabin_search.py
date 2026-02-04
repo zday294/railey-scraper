@@ -143,10 +143,16 @@ def main():
     
     print("Scraping complete. Report written to cabin-report.yml")
     
-    # Generate HTML report directly
+    # Generate HTML report directly from Python data structures
     print("Generating HTML report...")
     months_to_include = {"June", "July", "August"}
-    html_output = report_formatter.format(cabin_report, months_to_include)
+    required_amenity_names = [amenity.name for amenity in REQUIRED_AMENITIES]
+    data_dict = report_formatter.build_data_from_python(
+        cabin_price_list_by_weekend, 
+        average_price_of_cabin_by_weekend,
+        required_amenity_names
+    )
+    html_output = report_formatter.format(data_dict, months_to_include)
     with open('cabin-report.html', 'w') as f:
         f.write(html_output)
     
