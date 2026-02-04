@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .cabin-name {
+            font-weight: bold;
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+        .cabin-name a {
+            color: #2c5aa0;
+            text-decoration: none;
+        }
+        .cabin-name a:hover {
+            text-decoration: underline;
+        }
+        .best-price {
+            background-color: #00C853;
+            color: white;
+            font-weight: bold;
+        }
+        .available {
+            background-color: #C8E6C9;
+        }
+        .unavailable {
+            background-color: #ffebee;
+            color: #999;
+        }
+        .amenity-header {
+            background-color: #2196F3;
+            color: white;
+        }
+        .has-amenity {
+            background-color: #E3F2FD;
+            font-weight: bold;
+        }
+        .no-amenity {
+            background-color: #f5f5f5;
+            color: #ccc;
+        }
+        .bed-header {
+            background-color: #9C27B0;
+            color: white;
+        }
+        .bed-info {
+            background-color: #F3E5F5;
+            text-align: center;
+        }
+        .weekend-average {
+            background-color: #FF9800;
+            color: white;
+            font-weight: bold;
+        }
+        .average-row {
+            background-color: #FFF3E0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cabin Pricing Report</h1>
+    <p>Showing data for: June, July, August</p>
+    <p>Weekend = Friday night to Monday morning</p>    <p>All cabins here incldue a gas grill, Wi-Fi, central air conditioning, and an outdoor firepit.</p>    <p>CARC = Community Aquatic Recreation Center (aka pool)</p>    <table>
+        <thead>
+            <tr>
+                <th>Cabin</th>
+                <th class='amenity-header'>Home Theater</th>
+                <th class='amenity-header'>Pool</th>
+                <th class='amenity-header'>Pool Table</th>
+                <th class='bed-header'>Upper Beds</th>
+                <th class='bed-header'>Main Beds</th>
+                <th class='bed-header'>Lower Beds</th>
+                <th class='bed-header'>Garage Beds</th>
+                <th class='bed-header'>Total Beds</th>
+                <th class='bed-header'>Occupancy</th>
+                <th>July Weekend 3</th>
+                <th>July Weekend 4</th>
+                <th>Average Price</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/all' target='_blank'>All In</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$4,115.10</td>
+                <td class='available'>$4,242.70</td>
+                <td><strong>$4,178.90</strong></td>
+                <td><strong>1,722</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/almost-heaven-0' target='_blank'>Almost Heaven</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$1,682.96</td>
+                <td class='best-price'>$1,630.64</td>
+                <td><strong>$1,656.80</strong></td>
+                <td><strong>4,244</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/alpine-lodge' target='_blank'>Alpine Lodge</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>6</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,009.70</td>
+                <td class='best-price'>$1,940.40</td>
+                <td><strong>$1,975.05</strong></td>
+                <td><strong>3,876</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/alpine-spirit' target='_blank'>Alpine Spirit</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,178.00</td>
+                <td class='best-price'>$2,137.30</td>
+                <td><strong>$2,157.65</strong></td>
+                <td><strong>3,592</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/altitude-adjustment' target='_blank'>Altitude Adjustment</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='unavailable'>—</td>
+                <td class='best-price'>$3,444.10</td>
+                <td><strong>$3,444.10</strong></td>
+                <td><strong>2,606</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/bear-moon-lodge' target='_blank'>Bear Moon Lodge</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='no-amenity'>—</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,826.37</td>
+                <td class='best-price'>$2,765.33</td>
+                <td><strong>$2,795.85</strong></td>
+                <td><strong>2,954</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/bear-ridge-resort' target='_blank'>Bear Ridge Resort</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='no-amenity'>—</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,623.50</td>
+                <td class='best-price'>$2,552.00</td>
+                <td><strong>$2,587.75</strong></td>
+                <td><strong>3,162</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/bear-run-lodge-0' target='_blank'>Bear Run Lodge</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,758.80</td>
+                <td class='best-price'>$2,699.40</td>
+                <td><strong>$2,729.10</strong></td>
+                <td><strong>3,022</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/black-bear-summit' target='_blank'>Black Bear Summit</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$2,125.50</td>
+                <td class='unavailable'>—</td>
+                <td><strong>$2,125.50</strong></td>
+                <td><strong>3,775</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/breeze-alley' target='_blank'>Breeze Alley</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$2,525.53</td>
+                <td class='unavailable'>—</td>
+                <td><strong>$2,525.53</strong></td>
+                <td><strong>3,225</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/cabin-fever' target='_blank'>Cabin Fever</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>0</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$4,027.10</td>
+                <td class='available'>$4,316.40</td>
+                <td><strong>$4,171.75</strong></td>
+                <td><strong>1,528</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/captain-jacks' target='_blank'>Captain Jack's</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$3,255.63</td>
+                <td class='available'>$3,535.35</td>
+                <td><strong>$3,395.49</strong></td>
+                <td><strong>2,505</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/chubby-bunny-lodge' target='_blank'>Chubby Bunny Lodge</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$3,021.42</td>
+                <td class='unavailable'>—</td>
+                <td><strong>$3,021.42</strong></td>
+                <td><strong>2,879</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/colorado-blue-skies' target='_blank'>Colorado Blue Skies</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='no-amenity'>—</td>
+                <td class='bed-info'>4</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>0</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$2,431.79</td>
+                <td class='available'>$2,498.28</td>
+                <td><strong>$2,465.03</strong></td>
+                <td><strong>3,586</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/fantasy-inn' target='_blank'>Fantasy Inn</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$1,709.40</td>
+                <td class='unavailable'>—</td>
+                <td><strong>$1,709.40</strong></td>
+                <td><strong>4,191</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/fireside' target='_blank'>Fireside</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='no-amenity'>—</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,628.48</td>
+                <td class='best-price'>$2,501.94</td>
+                <td><strong>$2,565.21</strong></td>
+                <td><strong>3,336</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/footsteps-fun' target='_blank'>Footsteps From Fun</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,890.80</td>
+                <td class='best-price'>$2,831.40</td>
+                <td><strong>$2,861.10</strong></td>
+                <td><strong>2,890</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/heavenly-haven' target='_blank'>Heavenly Haven</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>6</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='unavailable'>—</td>
+                <td class='best-price'>$2,424.16</td>
+                <td><strong>$2,424.16</strong></td>
+                <td><strong>3,526</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/hilltop-hideaway' target='_blank'>Hilltop Hideaway</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='no-amenity'>—</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='unavailable'>—</td>
+                <td class='best-price'>$2,193.08</td>
+                <td><strong>$2,193.08</strong></td>
+                <td><strong>3,557</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/honey-hole' target='_blank'>Honey Hole</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$2,336.40</td>
+                <td class='unavailable'>—</td>
+                <td><strong>$2,336.40</strong></td>
+                <td><strong>3,564</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/woods' target='_blank'>Into The Woods</a></td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='no-amenity'>—</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>0</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,965.60</td>
+                <td class='best-price'>$2,902.90</td>
+                <td><strong>$2,934.25</strong></td>
+                <td><strong>2,966</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/mountain-breeze' target='_blank'>Mountain Breeze</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$2,380.56</td>
+                <td class='best-price'>$2,227.96</td>
+                <td><strong>$2,304.26</strong></td>
+                <td><strong>3,446</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/mystic-haven' target='_blank'>Mystic Haven</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$1,540.17</td>
+                <td class='best-price'>$1,446.43</td>
+                <td><strong>$1,493.30</strong></td>
+                <td><strong>4,257</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/peak-perfection' target='_blank'>Peak of Perfection</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$2,742.44</td>
+                <td class='available'>$2,784.95</td>
+                <td><strong>$2,763.69</strong></td>
+                <td><strong>3,137</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/pisces-rock' target='_blank'>Pisces Rock</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>13</strong></td>
+                <td class='best-price'>$2,735.64</td>
+                <td class='available'>$2,811.24</td>
+                <td><strong>$2,773.44</strong></td>
+                <td><strong>2,977</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/rock-lodge-retreat' target='_blank'>Rock Lodge Retreat</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$1,894.42</td>
+                <td class='available'>$1,973.99</td>
+                <td><strong>$1,934.20</strong></td>
+                <td><strong>3,866</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/serenity-summit' target='_blank'>Serenity Summit</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='no-amenity'>—</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$2,228.60</td>
+                <td class='unavailable'>—</td>
+                <td><strong>$2,228.60</strong></td>
+                <td><strong>3,522</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/snugglinn' target='_blank'>Snuggl'Inn</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='unavailable'>—</td>
+                <td class='best-price'>$2,827.00</td>
+                <td><strong>$2,827.00</strong></td>
+                <td><strong>3,073</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/stilwater-retreat' target='_blank'>Stilwater Retreat</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>0</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='available'>$3,108.60</td>
+                <td class='best-price'>$2,900.70</td>
+                <td><strong>$3,004.65</strong></td>
+                <td><strong>2,946</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/lodge-mchenry-cove-marina' target='_blank'>The Lodge at McHenry Cove Marina</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>3</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>0</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>14</strong></td>
+                <td class='best-price'>$1,838.16</td>
+                <td class='available'>$1,880.28</td>
+                <td><strong>$1,859.22</strong></td>
+                <td><strong>4,091</strong></td>
+            </tr>
+            <tr>
+                <td class='cabin-name'><a href='https://www.deepcreek.com/vacation-rentals/wood-fore-reserve' target='_blank'>Wood-Fore Reserve</a></td>
+                <td class='no-amenity'>—</td>
+                <td class='has-amenity'>✓</td>
+                <td class='has-amenity'>✓</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>1</td>
+                <td class='bed-info'>2</td>
+                <td class='bed-info'>—</td>
+                <td class='bed-info'><strong>5</strong></td>
+                <td class='bed-info'><strong>13</strong></td>
+                <td class='best-price'>$1,974.50</td>
+                <td class='available'>$1,985.50</td>
+                <td><strong>$1,980.00</strong></td>
+                <td><strong>3,920</strong></td>
+            </tr>
+            <tr class='average-row'>
+                <td class='cabin-name'>Weekend Average</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td style='background-color: rgba(255, 152, 0, 0.30); color: white; font-weight: bold;'>$2,539.08</td>
+                <td style='background-color: rgba(255, 152, 0, 1.00); color: white; font-weight: bold;'>$2,618.14</td>
+                <td>—</td>
+                <td>—</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -7,13 +7,8 @@ from typing import Dict, List, Set
 import statistics
 from datetime import datetime
 
-def parse_cabin_data_from_file(filepath: str) -> Dict:
-    """Load and parse the YAML cabin report file."""
-    with open(filepath, 'r') as f:
-        data = yaml.safe_load(f)
-    return data
 
-def parse_cabin_data_from_string(yaml_string: str) -> Dict:
+def parse_cabin_data(yaml_string: str) -> Dict:
     """Parse YAML cabin report from a string."""
     data = yaml.safe_load(yaml_string)
     return data
@@ -367,6 +362,14 @@ def generate_html_table(cabin_data: Dict[str, Dict[str, Dict]], cabin_amenities:
     
     return html
 
+def format(yaml_data: str, months_to_include: Set[str] = None) -> str:
+    """Format the given YAML cabin data string into an HTML report."""
+    data = parse_cabin_data(yaml_data)
+    cabin_data = extract_cabin_prices(data, months_to_include)
+    cabin_amenities = extract_amenities(data)
+    html_output = generate_html_table(cabin_data, cabin_amenities, data, months_to_include)
+    return html_output
+
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='Generate HTML cabin pricing report')
@@ -380,12 +383,12 @@ def main():
     months_to_include = {"June", "July", "August"}  # or None for all months
     
     # Load and process data
-    data = parse_cabin_data_from_file('cabin-report.yml')
-    cabin_data = extract_cabin_prices(data, months_to_include)
-    cabin_amenities = extract_amenities(data)
+    data = None
+    with open('cabin-report.yml', 'r') as f:
+        data = yaml.safe_load(f)
     
     # Generate HTML
-    html_output = generate_html_table(cabin_data, cabin_amenities, data, months_to_include)
+    html_output = format(yaml_data=data, months_to_include=months_to_include)
     
     # Save to file
     with open(args.output, 'w') as f:

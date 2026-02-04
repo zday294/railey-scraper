@@ -1,0 +1,506 @@
+
+Cabin prices for July Weekend 3:
+  "Almost Heaven":
+    Price: $1682.96
+    URL: https://www.deepcreek.com/vacation-rentals/almost-heaven-0
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 4218
+  "All In":
+    Price: $4115.10
+    URL: https://www.deepcreek.com/vacation-rentals/all
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 1785
+  "Alpine Lodge":
+    Price: $2009.70
+    URL: https://www.deepcreek.com/vacation-rentals/alpine-lodge
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 2
+    Lower Beds: 2
+    Score: 3841
+  "Footsteps From Fun":
+    Price: $2890.80
+    URL: https://www.deepcreek.com/vacation-rentals/footsteps-fun
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 2860
+  "Chubby Bunny Lodge":
+    Price: $3021.42
+    URL: https://www.deepcreek.com/vacation-rentals/chubby-bunny-lodge
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 2879
+  "Mountain Breeze":
+    Price: $2380.56
+    URL: https://www.deepcreek.com/vacation-rentals/mountain-breeze
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3370
+  "Bear Ridge Resort":
+    Price: $2623.50
+    URL: https://www.deepcreek.com/vacation-rentals/bear-ridge-resort
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3127
+  "Colorado Blue Skies":
+    Price: $2431.79
+    URL: https://www.deepcreek.com/vacation-rentals/colorado-blue-skies
+    Occupancy: 14
+    Upper Beds: 4
+    Main Beds: 1
+    Lower Beds: 0
+    Score: 3619
+  "Fantasy Inn":
+    Price: $1709.40
+    URL: https://www.deepcreek.com/vacation-rentals/fantasy-inn
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 4191
+  "Captain Jack's":
+    Price: $3255.63
+    URL: https://www.deepcreek.com/vacation-rentals/captain-jacks
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 1
+    Score: 2645
+  "Bear Run Lodge":
+    Price: $2758.80
+    URL: https://www.deepcreek.com/vacation-rentals/bear-run-lodge-0
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 2992
+  "Pisces Rock":
+    Price: $2735.64
+    URL: https://www.deepcreek.com/vacation-rentals/pisces-rock
+    Occupancy: 13
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3015
+  "Alpine Spirit":
+    Price: $2178.00
+    URL: https://www.deepcreek.com/vacation-rentals/alpine-spirit
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3572
+  "Honey Hole":
+    Price: $2336.40
+    URL: https://www.deepcreek.com/vacation-rentals/honey-hole
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3564
+  "Bear Moon Lodge":
+    Price: $2826.37
+    URL: https://www.deepcreek.com/vacation-rentals/bear-moon-lodge
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 2924
+  "Into The Woods":
+    Price: $2965.60
+    URL: https://www.deepcreek.com/vacation-rentals/woods
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 0
+    Score: 2935
+    Garage Beds: 1
+  "Wood-Fore Reserve":
+    Price: $1974.50
+    URL: https://www.deepcreek.com/vacation-rentals/wood-fore-reserve
+    Occupancy: 13
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3926
+  "The Lodge at McHenry Cove Marina":
+    Price: $1838.16
+    URL: https://www.deepcreek.com/vacation-rentals/lodge-mchenry-cove-marina
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 2
+    Lower Beds: 0
+    Score: 4112
+  "Serenity Summit":
+    Price: $2228.60
+    URL: https://www.deepcreek.com/vacation-rentals/serenity-summit
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3522
+  "Stilwater Retreat":
+    Price: $3108.60
+    URL: https://www.deepcreek.com/vacation-rentals/stilwater-retreat
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 2
+    Lower Beds: 0
+    Score: 2842
+  "Black Bear Summit":
+    Price: $2125.50
+    URL: https://www.deepcreek.com/vacation-rentals/black-bear-summit
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3775
+  "Mystic Haven":
+    Price: $1540.17
+    URL: https://www.deepcreek.com/vacation-rentals/mystic-haven
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 4210
+  "Peak of Perfection":
+    Price: $2742.44
+    URL: https://www.deepcreek.com/vacation-rentals/peak-perfection
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3158
+  "Breeze Alley":
+    Price: $2525.53
+    URL: https://www.deepcreek.com/vacation-rentals/breeze-alley
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3225
+  "Cabin Fever":
+    Price: $4027.10
+    URL: https://www.deepcreek.com/vacation-rentals/cabin-fever
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 0
+    Lower Beds: 3
+    Score: 1673
+  "Rock Lodge Retreat":
+    Price: $1894.42
+    URL: https://www.deepcreek.com/vacation-rentals/rock-lodge-retreat
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 2
+    Lower Beds: 1
+    Score: 3906
+  "Fireside":
+    Price: $2628.48
+    URL: https://www.deepcreek.com/vacation-rentals/fireside
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 1
+    Score: 3272
+Average price for July Weekend 3: $2539.08
+
+Cabin prices for July Weekend 4:
+  "Colorado Blue Skies":
+    Price: $2498.28
+    URL: https://www.deepcreek.com/vacation-rentals/colorado-blue-skies
+    Occupancy: 14
+    Upper Beds: 4
+    Main Beds: 1
+    Lower Beds: 0
+    Score: 3552
+  "All In":
+    Price: $4242.70
+    URL: https://www.deepcreek.com/vacation-rentals/all
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 1658
+  "Almost Heaven":
+    Price: $1630.64
+    URL: https://www.deepcreek.com/vacation-rentals/almost-heaven-0
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 4270
+  "Alpine Lodge":
+    Price: $1940.40
+    URL: https://www.deepcreek.com/vacation-rentals/alpine-lodge
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 2
+    Lower Beds: 2
+    Score: 3910
+  "Alpine Spirit":
+    Price: $2137.30
+    URL: https://www.deepcreek.com/vacation-rentals/alpine-spirit
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3613
+  "Cabin Fever":
+    Price: $4316.40
+    URL: https://www.deepcreek.com/vacation-rentals/cabin-fever
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 0
+    Lower Beds: 3
+    Score: 1384
+  "Captain Jack's":
+    Price: $3535.35
+    URL: https://www.deepcreek.com/vacation-rentals/captain-jacks
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 1
+    Score: 2365
+  "Bear Moon Lodge":
+    Price: $2765.33
+    URL: https://www.deepcreek.com/vacation-rentals/bear-moon-lodge
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 2985
+  "Bear Ridge Resort":
+    Price: $2552.00
+    URL: https://www.deepcreek.com/vacation-rentals/bear-ridge-resort
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3198
+  "Bear Run Lodge":
+    Price: $2699.40
+    URL: https://www.deepcreek.com/vacation-rentals/bear-run-lodge-0
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3051
+  "Into The Woods":
+    Price: $2902.90
+    URL: https://www.deepcreek.com/vacation-rentals/woods
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 0
+    Score: 2998
+    Garage Beds: 1
+  "Fireside":
+    Price: $2501.94
+    URL: https://www.deepcreek.com/vacation-rentals/fireside
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 1
+    Score: 3399
+  "Footsteps From Fun":
+    Price: $2831.40
+    URL: https://www.deepcreek.com/vacation-rentals/footsteps-fun
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 2919
+  "Stilwater Retreat":
+    Price: $2900.70
+    URL: https://www.deepcreek.com/vacation-rentals/stilwater-retreat
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 2
+    Lower Beds: 0
+    Score: 3050
+  "Pisces Rock":
+    Price: $2811.24
+    URL: https://www.deepcreek.com/vacation-rentals/pisces-rock
+    Occupancy: 13
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 2939
+  "Rock Lodge Retreat":
+    Price: $1973.99
+    URL: https://www.deepcreek.com/vacation-rentals/rock-lodge-retreat
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 2
+    Lower Beds: 1
+    Score: 3827
+  "Mystic Haven":
+    Price: $1446.43
+    URL: https://www.deepcreek.com/vacation-rentals/mystic-haven
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 4304
+  "Peak of Perfection":
+    Price: $2784.95
+    URL: https://www.deepcreek.com/vacation-rentals/peak-perfection
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3116
+  "Mountain Breeze":
+    Price: $2227.96
+    URL: https://www.deepcreek.com/vacation-rentals/mountain-breeze
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3523
+  "Wood-Fore Reserve":
+    Price: $1985.50
+    URL: https://www.deepcreek.com/vacation-rentals/wood-fore-reserve
+    Occupancy: 13
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3915
+  "The Lodge at McHenry Cove Marina":
+    Price: $1880.28
+    URL: https://www.deepcreek.com/vacation-rentals/lodge-mchenry-cove-marina
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 2
+    Lower Beds: 0
+    Score: 4070
+  "Snuggl'Inn":
+    Price: $2827.00
+    URL: https://www.deepcreek.com/vacation-rentals/snugglinn
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3073
+  "Heavenly Haven":
+    Price: $2424.16
+    URL: https://www.deepcreek.com/vacation-rentals/heavenly-haven
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3526
+  "Altitude Adjustment":
+    Price: $3444.10
+    URL: https://www.deepcreek.com/vacation-rentals/altitude-adjustment
+    Occupancy: 14
+    Upper Beds: 3
+    Main Beds: 1
+    Lower Beds: 1
+    Score: 2606
+  "Hilltop Hideaway":
+    Price: $2193.08
+    URL: https://www.deepcreek.com/vacation-rentals/hilltop-hideaway
+    Occupancy: 14
+    Upper Beds: 2
+    Main Beds: 1
+    Lower Beds: 2
+    Score: 3557
+Average price for July Weekend 4: $2618.14
+
+Least Expensive Weekend: July Weekend 3
+Average Price: $2539.08
+
+Cabin amenities:
+  Almost Heaven:
+    - Pool
+    - Pool Table
+  All In:
+    - Pool
+    - Pool Table
+  Alpine Lodge:
+    - Pool Table
+  Footsteps From Fun:
+    - Pool Table
+  Chubby Bunny Lodge:
+    - Pool
+    - Pool Table
+    - Pool Table
+  Mountain Breeze:
+    - Pool Table
+  Bear Ridge Resort:
+    - Pool
+  Colorado Blue Skies:
+    - Pool
+  Fantasy Inn:
+    - Pool
+    - Pool Table
+  Captain Jack's:
+    - Pool Table
+  Bear Run Lodge:
+    - Pool Table
+  Pisces Rock:
+    - Pool Table
+  Alpine Spirit:
+    - Pool Table
+  Honey Hole:
+    - Pool
+    - Pool Table
+  Bear Moon Lodge:
+    - Pool
+  Into The Woods:
+    - Pool
+    - Home Theater
+  Wood-Fore Reserve:
+    - Pool
+    - Pool
+    - Pool Table
+  The Lodge at McHenry Cove Marina:
+    - Pool Table
+  Serenity Summit:
+    - Pool
+  Stilwater Retreat:
+    - Pool Table
+    - Pool Table
+  Black Bear Summit:
+    - Pool
+    - Pool Table
+  Mystic Haven:
+    - Pool Table
+  Peak of Perfection:
+    - Pool
+    - Pool Table
+  Breeze Alley:
+    - Pool Table
+  Cabin Fever:
+    - Pool Table
+  Rock Lodge Retreat:
+    - Pool Table
+  Fireside:
+    - Pool
+  Snuggl'Inn:
+    - Pool
+    - Pool Table
+  Heavenly Haven:
+    - Pool Table
+  Altitude Adjustment:
+    - Pool
+    - Pool
+    - Pool Table
+  Hilltop Hideaway:
+    - Pool
