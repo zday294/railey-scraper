@@ -2,6 +2,7 @@
 #cabin_search.py
 
 import scrape
+import report_formatter
 from cabin import KeyCabin
 from config import REQUIRED_AMENITIES, MIN_OCCUPANCY, MAX_OCCUPANCY, MIN_BEDS, MAX_BEDS, MIN_BATHS, MAX_BATHS, MIN_UP_BEDS
 
@@ -141,6 +142,15 @@ def main():
         f.write(cabin_report)
     
     print("Scraping complete. Report written to cabin-report.yml")
+    
+    # Generate HTML report directly
+    print("Generating HTML report...")
+    months_to_include = {"June", "July", "August"}
+    html_output = report_formatter.format(cabin_report, months_to_include)
+    with open('cabin-report.html', 'w') as f:
+        f.write(html_output)
+    
+    print("HTML report generated: cabin-report.html")
 
 
 if __name__ == "__main__":
