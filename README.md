@@ -10,7 +10,9 @@ This pair of Python scripts creates an html document with a report of all the ca
 
 ## How to run
 
-Once dependencies are installed simply run `python scrape.py` followed by `python report-formmater.py`. The combo of these two commands will create an html doc with a report of all the cabin prices for the weekends included in the code, as well as reporting which optional amenities are included and giving a score for each cabin based on the included features. 
+Once dependencies are installed simply run `python cabin_search.py`. This will create both a YAML report (`cabin-report.yml`) and an HTML report (`cabin-report.html`) with all the cabin prices for the weekends included in the code, as well as reporting which optional amenities are included and giving a score for each cabin based on the included features.
+
+Alternatively, if you already have a YAML report file, you can generate just the HTML report by running `python report_formatter.py`. 
 
 ## Changing parameter values
 

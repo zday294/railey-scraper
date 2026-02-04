@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 #cabin_search.py
 
+import argparse
 import scrape
+import report_formatter
 from cabin import KeyCabin
 from config import REQUIRED_AMENITIES, MIN_OCCUPANCY, MAX_OCCUPANCY, MIN_BEDS, MAX_BEDS, MIN_BATHS, MAX_BATHS, MIN_UP_BEDS
 
@@ -127,6 +129,13 @@ def report(cabin_prices_by_weekend: dict[str, list[KeyCabin]], average_prices):
 
 
 def main():
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Search for cabins and generate reports')
+    parser.add_argument('--output', '-o', 
+                       default='cabin-report.html',
+                       help='filename for the HTML output report (default: cabin-report.html)')
+    args = parser.parse_args()
+    
     print("Begin scraping of Railey Cabins for Syndicate")
     cabin_price_list_by_weekend = {}
     for weekend in SUMMER_WEEKENDS_2026:
@@ -141,6 +150,21 @@ def main():
         f.write(cabin_report)
     
     print("Scraping complete. Report written to cabin-report.yml")
+    
+    # Generate HTML report directly from Python data structures
+    print("Generating HTML report...")
+    months_to_include = {"June", "July", "August"}
+    required_amenity_names = [amenity.name for amenity in REQUIRED_AMENITIES]
+    data_dict = report_formatter.build_data_from_python(
+        cabin_price_list_by_weekend, 
+        average_price_of_cabin_by_weekend,
+        required_amenity_names
+    )
+    html_output = report_formatter.format(data_dict, months_to_include)
+    with open(args.output, 'w') as f:
+        f.write(html_output)
+    
+    print(f"HTML report generated: {args.output}")
 
 
 if __name__ == "__main__":
