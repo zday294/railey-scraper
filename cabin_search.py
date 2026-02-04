@@ -133,7 +133,7 @@ def main():
     parser = argparse.ArgumentParser(description='Search for cabins and generate reports')
     parser.add_argument('--output', '-o', 
                        default='cabin-report.html',
-                       help='Output HTML filename (default: cabin-report.html)')
+                       help='Output HTML filename')
     args = parser.parse_args()
     
     print("Begin scraping of Railey Cabins for Syndicate")
