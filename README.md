@@ -16,7 +16,11 @@ Once dependencies are installed simply run `python scrape.py` followed by `pytho
 
 `config.py` contains the following configurable parameters 
 - MIN_OCCUPANCY / MAX_OCCUPANCY - Cabins with an occupancy that is at least (>=) MIN_OCCUPANCY and at most (<=) MAX_OCCUPANCY will be included in the results
-- MIN_BEDS / MAX_BEDS - Cabins with at least a  MIN_BEDS and 
+- MIN_BEDS / MAX_BEDS - Cabins with a number of bedrooms equal to at least MIN_BEDS and at most MAX_BEDS
+- MIN_BATHS / MAX_BATHS - Cabins with a number of bathrooms equal to at least MIN_BATHS and at most MAX_BATHS
+- MIN_UP_BEDS - The minimum number of bedrooms on a floor above the main floor. 
+- REQUIRED_AMENITIES - The amenities that a cabin must have to be included in the list. This is a list of `Amentiy` objects defined in `amenity.py`.
+- OPTIONAL_AMENITIES - Amenities that would be nice to have but are not necessary to consider a cabin. Also a list of `Amenity` objects.  
 
 
 ## AI Disclosure
