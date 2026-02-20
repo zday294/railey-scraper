@@ -3,7 +3,7 @@ app.component('cabin-price', {
         price: {
             required: true
         },
-        highestPrice: {
+        bestPrice: {
             required: true
         }
     },
@@ -11,7 +11,7 @@ app.component('cabin-price', {
     /*html*/
     `
     <td v-if="price == undefined" class='unavailable'>-</td>
-    <td v-else :class="{ 'best-price': isHighestPrice, available: !isHighestPrice}" > {{'$'}}{{formatRate(price)}}</td>
+    <td v-else :class="{ 'best-price': isBestPrice, available: !isBestPrice}" > {{'$'}}{{formatRate(price)}}</td>
     `,
     methods: {
         formatRate(value) {
@@ -19,8 +19,8 @@ app.component('cabin-price', {
         }
     },
     computed: {
-        isHighestPrice() {
-            return this.price == this.highestPrice
+        isBestPrice() {
+            return this.price == this.bestPrice
         }
     }
 })
