@@ -26,7 +26,7 @@ app.component('cabin-line', {
         <td class='bed-info'><strong> {{ totalBeds }}</strong></td>
         <td class='bed-info'><strong>{{ cabin.occupancy }}</strong></td>
         
-        <cabin-price v-for="weekend in this.weekends" :price="this.cabin.prices[weekend]" :highestPrice="this.lowestWeekend" ></cabin-price>
+        <cabin-price v-for="weekend in this.weekends" :price="this.cabin.prices[weekend]" :bestPrice="this.lowestWeekend" ></cabin-price>
         
         <td><strong>{{'$'}}{{formatRate(averagePrice)}}</strong></td>
         <td><strong>{{cabin.score}}</strong></td>
@@ -43,7 +43,7 @@ app.component('cabin-line', {
     },
     computed: {
         hasTheater() {
-            return this.cabin.amenities.indexOf('Theater') > -1
+            return this.cabin.amenities.indexOf('Home Theater') > -1
         },
         hasPool() {
             return this.cabin.amenities.indexOf('Pool') > -1
