@@ -26,7 +26,7 @@ app.component('cabin-line', {
         <td class='bed-info'><strong> {{ totalBeds }}</strong></td>
         <td class='bed-info'><strong>{{ cabin.occupancy }}</strong></td>
         
-        <cabin-price v-for="weekend in this.weekends" :price="this.cabin.prices[weekend]"></cabin-price>
+        <cabin-price v-for="weekend in this.weekends" :price="this.cabin.prices[weekend]" :highestPrice="this.lowestWeekend" ></cabin-price>
         
         <td><strong>{{'$'}}{{formatRate(averagePrice)}}</strong></td>
         <td><strong>{{cabin.score}}</strong></td>
@@ -63,6 +63,12 @@ app.component('cabin-line', {
             });
 
             return (sum / Object.keys(this.cabin.prices).length)
+        },
+        lowestWeekend()  {
+            pricesOnly = Object.values(this.cabin.prices)
+            
+            const min = pricesOnly.reduce((prev, current) => (prev && prev < current) ? prev : current)
+            return min
         }
     }
 })
