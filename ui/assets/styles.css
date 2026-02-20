@@ -1,0 +1,67 @@
+table {
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+.cabin-name {
+    font-weight: bold;
+    text-align: left;
+    background-color: #f2f2f2;
+}
+.cabin-name a {
+    color: #2c5aa0;
+    text-decoration: none;
+}
+.cabin-name a:hover {
+    text-decoration: underline;
+}
+.best-price {
+    background-color: #00C853;
+    color: white;
+    font-weight: bold;
+}
+.available {
+    background-color: #C8E6C9;
+}
+.unavailable {
+    background-color: #ffebee;
+    color: #999;
+}
+.amenity-header {
+    background-color: #2196F3;
+    color: white;
+}
+.has-amenity {
+    background-color: #E3F2FD;
+    font-weight: bold;
+}
+.no-amenity {
+    background-color: #f5f5f5;
+    color: #ccc;
+}
+.bed-header {
+    background-color: #9C27B0;
+    color: white;
+}
+.bed-info {
+    background-color: #F3E5F5;
+    text-align: center;
+}
+.weekend-average {
+    background-color: #FF9800;
+    color: white;
+    font-weight: bold;
+}
+.average-row {
+    background-color: #FFF3E0;
+    font-weight: bold;
+}
