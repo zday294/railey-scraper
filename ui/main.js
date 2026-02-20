@@ -56,7 +56,7 @@ const app = Vue.createApp({
                 {
                     name: "Captain Jack's",
                     prices: {
-                        "w4": 2430.70
+                        "w4": 3560.88
                     },
                     url: "https://www.deepcreek.com/vacation-rentals/captain-jacks",
                     occupancy: 14,
@@ -86,7 +86,8 @@ const app = Vue.createApp({
                     ],
                     score: 2593
                 }
-            ]
+            ],
+            weekends: ["w3", "w4"]
         }
     }
 })

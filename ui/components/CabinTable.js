@@ -3,6 +3,10 @@ app.component('cabin-table', {
         cabins: {
             type: Array,
             required: true
+        },
+        weekends: {
+            type: Array,
+            required: true
         }
     },
     template: 
@@ -29,10 +33,50 @@ app.component('cabin-table', {
                 </tr>
             </thead>
             <tbody>
-            <tr v-for="cabin in cabins"> <cabin-line :cabin="cabin"></cabin-line> </tr>
+                <tr v-for="cabin in cabins"> <cabin-line :cabin="cabin" :weekends="weekends"></cabin-line> </tr>
+
+                <tr class='average-row'>
+                    <td class='cabin-name'>Weekend Average</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <!-- for weekend in weekends here -->
+                    <td v-for="weekend in weekends" :style="heatStyle(averageCabinPriceForWeekend(weekend))">{{'$'}}{{formatRate(averageCabinPriceForWeekend(weekend))}}</td>
+                    <td>—</td>
+                    <td>—</td>
+                </tr>
             </tbody>
         </table>
     </div>
-    `
+    `,
+    methods: {
+        averageCabinPriceForWeekend(weekend) {
+            availableCabins = 0
+            sum = 0
+            this.cabins.forEach(cabin => {
+                weekendPrice = cabin.prices[weekend]
+                if (weekendPrice != undefined && weekendPrice != NaN){
+                    availableCabins++
+                    sum += weekendPrice
+                }
+            });
+
+            return sum / availableCabins
+        },
+        heatStyle(price) {
+            (price / 5000).toFixed(2)
+            return 'background-color: rgba(255, 152, 0, ' + (price / 5000).toFixed(2) + '); color: white; font-weight: bold;'
+        }
+        ,
+        formatRate(value) {
+            return parseFloat(value).toFixed(2);
+        }
+    }
 
 })

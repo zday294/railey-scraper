@@ -2,6 +2,10 @@ app.component('cabin-line', {
     props: {
         cabin: {
             required: true
+        },
+        weekends: {
+            type: Array,
+            require: true
         }
     },
     template: 
@@ -31,11 +35,6 @@ app.component('cabin-line', {
         <td><strong>{{'$'}}{{formatRate(averagePrice)}}</strong></td>
         <td><strong>{{cabin.score}}</strong></td>
     `,
-    data() {
-        return { 
-            weekends: ["w3", "w4"]
-        }
-    },
     methods: {
         formatRate(value) {
             return parseFloat(value).toFixed(2);
