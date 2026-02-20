@@ -5,7 +5,7 @@ import argparse
 import scrape
 import report_formatter
 from cabin import KeyCabin
-from config import REQUIRED_AMENITIES, MIN_OCCUPANCY, MAX_OCCUPANCY, MIN_BEDS, MAX_BEDS, MIN_BATHS, MAX_BATHS, MIN_UP_BEDS
+from config import MIN_UP_PLUS_MAIN_BEDS, REQUIRED_AMENITIES, MIN_OCCUPANCY, MAX_OCCUPANCY, MIN_BEDS, MAX_BEDS, MIN_BATHS, MAX_BATHS, MIN_UP_BEDS
 
 
 #create tuples with the start and end dates for each weekend in June, july, and august 2026 adding on the friday before and monday after
@@ -64,6 +64,10 @@ def prices_for_cabins_on_weekend(weekend):
 
             if cabin.up_beds < MIN_UP_BEDS:
                 print(f"Not enough upper beds for {cabin.name}: {cabin.up_beds} < {MIN_UP_BEDS}")
+                continue
+
+            if cabin.up_beds + cabin.main_beds < MIN_UP_PLUS_MAIN_BEDS:
+                print(f"Not enough upper + main beds for {cabin.name}: {cabin.up_beds + cabin.main_beds} < {MIN_UP_PLUS_MAIN_BEDS}")
                 continue
             
             filtered_cabins.append(cabin)
