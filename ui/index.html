@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Railey Cabin Report</title>
+        <!-- Stylesheet stolen from the cabin report html -->
+        <link rel="stylesheet" href="./assets/styles.css" />
+
+        <!-- Import Vue.js -->
+        <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <h1>Cabin Pricing Report</h1>
+            <p>Showing data for: June, August, July</p>
+            <p>Weekend = Friday night to Monday morning</p>    <p>All cabins here incldue a gas grill, Wi-Fi, central air conditioning, and an outdoor firepit.</p>    
+            <p>CARC = Community Aquatic Recreation Center (aka pool)</p>
+            <cabin-table :cabins="cabins" :weekends="weekends"></cabin-table>
+        </div>
+
+
+        <script src="main.js"></script>
+        <script src="./components/CabinTable.js"></script>
+        <script src="./components/CabinLine.js"></script>
+        <script src="./components/CabinPrice.js"></script>
+
+        <script>
+            const mountedApp = app.mount('#app')
+        </script>
+    </body>
+</html>
