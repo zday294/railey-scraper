@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info: 
+  title: Railey Scraper API
+  version: 0.0.1
+paths: 
+  /report:
+    get:
+      summary: Generate a report
+      description: Generate a report of all the cabins available on the given weekends for the minimum occupancy. Filters by other parameters as included
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                # *req*
+                # date range
+                # duration
+                duration:
+                  type: number
+                # starting weekday
+                startingWeekday:
+                  type: number # 0 = sun, 6 = sat
+                # minimum occupancy
+                minOccupancy:
+                  type: number
+
+                #*opt*
+                # required amenities
+                # optional amenities
+                # max occupancy
+                # max price
+                # min bedroom count and placement
+                # min bath count
+
+      responses:
+        "200": 
+          description: A-Ok!
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    name:
+                      type: string
+                    prices: 
+                      type: object
+                      additionalProperties:
+                        type: object
+                        properties:
+                          weekend:
+                            type: string
+                          price:
+                            type: string 
+                    url:
+                      type: string
+                    occupancy:
+                      type: number
+                    upperBeds:
+                      type: number
+                    mainBeds: 
+                      type: number
+                    lowerBeds: 
+                      type: number
+                    garageBeds:
+                      type: number
+                    amenities:
+                      type: array
+                      items:
+                        type: string
+                        enum: ["Pool", "Pool Table", "Theater"]
+                    score: 
+                      type: number
+                      
